@@ -1,0 +1,32 @@
+[
+  {
+    "id": "litmus-test",
+    "title": "Litmus Test Laboratory",
+    "class": "VI\u2013VII",
+    "subject": "Science",
+    "topic": "Acids, Bases and Salts",
+    "status": "Live",
+    "description": "Predict and test 12 everyday samples with red and blue litmus paper.",
+    "file": "experiments/litmus-test.html"
+  },
+  {
+    "id": "evaporation",
+    "title": "Evaporation Explorer",
+    "class": "VI\u2013VII",
+    "subject": "Science",
+    "topic": "Separation of Substances",
+    "status": "Coming soon",
+    "description": "Observe how heat and surface area affect evaporation.",
+    "file": "#"
+  },
+  {
+    "id": "magnetism",
+    "title": "Magnetism Sorter",
+    "class": "VI\u2013VII",
+    "subject": "Science",
+    "topic": "Magnets",
+    "status": "Coming soon",
+    "description": "Classify magnetic and non-magnetic materials through a virtual activity.",
+    "file": "#"
+  }
+]

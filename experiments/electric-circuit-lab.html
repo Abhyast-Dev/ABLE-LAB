@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electric Circuit Laboratory | Abhyast Science</title>
+    <style>
+        :root {
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --accent-glow: #fde047;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --border: #e2e8f0;
+            --radius: 12px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg-main); color: var(--text-main); line-height: 1.5; padding-bottom: 3rem; }
+        
+        .wrap { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+        
+        /* Header */
+        .topbar { background: var(--bg-card); border-bottom: 1px stroke var(--border); padding: 1rem 0; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .nav { display: flex; justify-content: space-between; align-items: center; }
+        .brand { font-size: 1.25rem; color: var(--text-main); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
+        .brand span { font-weight: 400; color: var(--text-muted); font-size: 0.9rem; margin-left: 0.5rem; border-left: 1px solid var(--border); padding-left: 0.5rem; }
+        .navlinks a { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; font-weight: 500; }
+        .navlinks a:hover { color: var(--primary); }
+
+        /* Hero */
+        .lab-hero { padding: 3rem 0; background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border-bottom: 1px solid var(--border); margin-bottom: 2.5rem; }
+        .eyebrow { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--primary); }
+        h1 { font-size: 2.5rem; font-weight: 800; margin: 0.5rem 0 1rem; tracking: -0.02em; }
+        .lead { max-width: 700px; color: var(--text-muted); font-size: 1.1rem; margin-bottom: 1.5rem; }
+        .actions { display: flex; gap: 0.75rem; }
+
+        /* Buttons & Forms */
+        .btn { background: var(--primary); color: white; border: none; padding: 0.625rem 1.25rem; font-size: 0.95rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; }
+        .btn:hover { background: var(--primary-hover); transform: translateY(-1px); }
+        .btn.secondary { background: transparent; color: var(--text-main); border: 1px solid var(--border); }
+        .btn.secondary:hover { background: #f1f5f9; }
+        
+        select, input[type="number"] { width: 100%; padding: 0.5rem; border: 1px solid var(--border); border-radius: 6px; font-size: 0.9rem; color: var(--text-main); background: #fff; }
+        select:focus, input:focus { outline: 2px solid var(--primary); }
+
+        /* Main Lab Layout */
+        .panel { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; margin-bottom: 2rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); }
+        .panel h2 { font-size: 1.5rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .panel .sub { color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+
+        /* Unified Composite Lab Card */
+        .lab-card { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: #fff; display: flex; flex-direction: column; transition: box-shadow 0.2s; }
+        .lab-card:hover { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
+        .card-header { padding: 1rem 1.25rem; background: #fafafa; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .card-header h3 { font-size: 1.05rem; font-weight: 700; }
+        .tag { font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.5rem; border-radius: 4px; background: #f1f5f9; color: var(--text-muted); }
+        .tag.closed { background: #dcfce7; color: var(--success); }
+        .tag.open-circuit { background: #fee2e2; color: var(--danger); }
+
+        /* SVG Vector Styling */
+        .circuit-viewport { background: #fafafa; border-bottom: 1px solid var(--border); position: relative; padding: 0.5rem; display: flex; justify-content: center; }
+        .circuit-svg { width: 100%; height: auto; max-height: 180px; }
+        .cell { fill: #334155; }
+        .holder { fill: #cbd5e1; }
+        .bulb-base { fill: #94a3b8; }
+        .bulb-glass { fill: #e2e8f0; stroke: #64748b; stroke-width: 2; transition: fill 0.3s; }
+        .bulb-glass.bulb-on { fill: var(--accent-glow); stroke: #eab308; }
+        .wire { fill: none; stroke-width: 4; stroke-linecap: round; }
+        .wire.red { stroke: #ef4444; }
+        .wire.green { stroke: #22c55e; }
+        .wire.yellow { stroke: #eab308; }
+        .wire.open { stroke-dasharray: 6 6; stroke-opacity: 0.5; }
+        .header-logo {
+            height: 36px;
+            width: auto;
+            display: block;
+            object-fit: contain;
+            }
+
+        /* Card Workspace Forms */
+        .card-workspace { padding: 1.25rem; flex-grow: 1; display: flex; flex-direction: column; gap: 1rem; }
+        .form-row { display: grid; grid-template-columns: 2fr 1fr; gap: 0.75rem; }
+        .form-group label { display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.25rem; }
+        
+        .card-actions { border-top: 1px solid var(--border); padding-top: 1rem; margin-top: auto; display: flex; gap: 0.5rem; }
+        .card-actions .btn { flex: 1; }
+
+        .card-feedback { font-size: 0.9rem; background: #f8fafc; padding: 0.75rem; border-radius: 6px; border-left: 3px solid var(--border); display: none; }
+        .card-feedback.active { display: block; }
+
+        /* Dynamic Evaluation Styles */
+        .eval-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem; }
+        .stat-box { background: #f8fafc; border: 1px solid var(--border); padding: 1.25rem; border-radius: 8px; text-align: center; }
+        .stat-val { font-size: 2rem; font-weight: 800; color: var(--primary); }
+
+        /* Tables & Extras */
+        .table-responsive { overflow-x: auto; margin-top: 1rem; }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.95rem; }
+        th, td { padding: 0.875rem 1rem; border-bottom: 1px solid var(--border); }
+        th { background: #f8fafc; font-weight: 600; color: var(--text-muted); }
+        .status-badge { font-weight: 600; font-size: 0.85rem; padding: 0.15rem 0.4rem; border-radius: 4px; }
+        .status-badge.correct { background: #dcfce7; color: var(--success); }
+        .status-badge.wrong { background: #fee2e2; color: var(--danger); }
+
+        /* Glossary grid setup */
+        .glossary { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; }
+        .term b { display: block; font-size: 1rem; margin-bottom: 0.25rem; color: var(--primary); }
+        .term { background: #f8fafc; padding: 1rem; border-radius: 8px; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <header class="topbar">
+        <div class="wrap nav">
+            <a class="brand" href="../index.html">
+                <img src="../assets/Logo.png" alt="ABLE™ Science Logo" class="header-logo" onerror="this.style.display='none';">
+                <strong>ABLE™ Science</strong>
+    
+                <span>Electric Circuit Laboratory</span>
+            </a>
+            <nav class="navlinks">
+                <a href="#glossary">Glossary</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="lab-hero">
+            <div class="wrap">
+                <span class="eyebrow">Activity • Will the bulb glow?</span>
+                <h1>Virtual Electric Circuit Laboratory</h1>
+                <p class="lead">Predict whether the lamp will glow, then test each arrangement. A bulb glows only when there is a complete path for electric current to flow dynamically from one terminal to another.</p>
+                <div class="actions">
+                
+                    <a class="btn secondary" href="../index.html">← Back Home Workspace</a>
+                
+                    <button class="btn" onclick="Lab.testAll()">Run All Tests</button>
+                    <button class="btn secondary" onclick="Lab.resetAll()">Reset Workspace</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="wrap">
+            <div class="panel">
+                <h2>1. Setup, Predict & Analyze Circuits</h2>
+                <p class="sub">Set your expectations and fire up the electric nodes to see if the current achieves a closed-loop system.</p>
+                <div id="lab-grid" class="grid"></div>
+            </div>
+
+            <div id="evaluation-panel" class="panel" style="display: none;"></div>
+
+            <div class="panel">
+                <h2>2. Circuit Log Matrix</h2>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Arrangement No.</th>
+                                <th>Prediction State</th>
+                                <th>Live Observation</th>
+                                <th>Evaluation</th>
+                                <th>Diagnostic Analysis</th>
+                            </tr>
+                        </thead>
+                        <tbody id="obs-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="panel" id="glossary">
+                <h2>Glossary</h2>
+                <div class="glossary">
+                    <div class="term"><b>Electric cell</b>A source of electrical energy with a positive (+) and negative (−) terminal.</div>
+                    <div class="term"><b>Bulb</b>A device that glows when current passes through its filament.</div>
+                    <div class="term"><b>Electric circuit</b>A complete closed path through which current can flow.</div>
+                    <div class="term"><b>Open circuit</b>An incomplete path. Current cannot flow, so the bulb does not glow.</div>
+                    <div class="term"><b>Closed circuit</b>A complete path. Current can flow, so the bulb glows.</div>
+                    <div class="term"><b>Terminal</b>The two ends of a cell or bulb where wires are connected.</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+<script>
+/**
+ * UI Blueprint configuration for all circuit representations
+ */
+const CIRCUITS_DATA = [
+    { id: 1, glows: true, reason: 'The cell terminals are connected directly to both bulb terminals, establishing a closed system.' },
+    { id: 2, glows: false, reason: 'The positive route is disconnected. Open circuits block current propagation.' },
+    { id: 3, glows: false, reason: 'The return path to the negative terminal is severed, leaving the loops broken.' },
+    { id: 4, glows: true, reason: 'Alternative crossed configurations still present full path closure for electric flow.' },
+    { id: 5, glows: true, reason: 'Both connection parameters adhere securely to terminal poles forming a true closed circuit.' },
+    { id: 6, glows: false, reason: 'Internal contact or dynamic junction paths contain open terminal leads preventing a feedback loop.' }
+];
+
+/**
+ * Main application controller module logic using ES6 closures
+ */
+const Lab = (() => {
+    let state = {};
+
+    function init() {
+        // Build independent deep isolation state objects per circuit element
+        CIRCUITS_DATA.forEach(c => {
+            state[c.id] = { tested: false, prediction: '', confidence: '' };
+        });
+        renderCards();
+        renderTable();
+    }
+
+    // Function to generate isolated SVG strings dynamically preserving standard graphics structural layout
+    function generateSvg(c, isLit = false) {
+        const showGlow = isLit && c.glows;
+        const isOpen = !c.glows;
+        return `
+        <svg class="circuit-svg" viewBox="0 0 420 230">
+            <rect x="42" y="62" width="52" height="126" rx="16" class="holder"/>
+            <rect x="55" y="48" width="54" height="132" rx="14" class="cell" transform="rotate(-12 82 114)"/>
+            <text x="67" y="86" fill="white" font-size="26" font-weight="900">+</text>
+            <text x="74" y="162" fill="white" font-size="26" font-weight="900">−</text>
+            <rect x="285" y="124" width="70" height="48" rx="10" class="bulb-base"/>
+            <circle cx="320" cy="105" r="30" class="bulb-glass ${showGlow ? 'bulb-on' : ''}"/>
+            <path d="M307 105 q13 18 26 0" stroke="#777" stroke-width="4" fill="none"/>
+            <path class="wire red ${isOpen && c.id === 2 ? 'open' : ''}" d="M90 58 C160 20, 220 36, 305 92"/>
+            <path class="wire green ${isOpen && c.id === 3 ? 'open' : ''}" d="M110 170 C170 198, 232 185, 285 145"/>
+            ${c.id === 4 || c.id === 5 ? '<path class="wire yellow" d="M108 58 C175 58,230 100,288 140"/>' : ''}
+            ${isOpen && c.id === 6 ? '<path class="wire open yellow" d="M108 168 C176 122,232 130,287 150"/>' : ''}
+            ${showGlow ? '<circle cx="320" cy="105" r="48" fill="#fde32d" opacity=".25"/>' : ''}
+        </svg>`;
+    }
+
+    function renderCards() {
+        const grid = document.getElementById('lab-grid');
+        grid.innerHTML = CIRCUITS_DATA.map(c => `
+            <article class="lab-card" id="card-${c.id}">
+                <div class="card-header">
+                    <h3>Arrangement ${c.id}</h3>
+                    <span class="tag status-tag">Untested</span>
+                </div>
+                <div class="circuit-viewport">${generateSvg(c, false)}</div>
+                <div class="card-workspace">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Hypothesis Prediction</label>
+                            <select id="pred-${c.id}" onchange="Lab.updateInputs(${c.id})">
+                                <option value="">Select forecast...</option>
+                                <option value="glow">Will glow</option>
+                                <option value="noglow">Will not glow</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Confidence (1-10)</label>
+                            <input type="number" id="conf-${c.id}" min="1" max="10" placeholder="--" oninput="Lab.updateInputs(${c.id})">
+                        </div>
+                    </div>
+                    <div class="card-feedback" id="feedback-${c.id}"></div>
+                    <div class="card-actions">
+                        <button class="btn" onclick="Lab.testSingle(${c.id})">Evaluate Live</button>
+                    </div>
+                </div>
+            </article>
+        `).join('');
+    }
+
+    function renderTable() {
+        const tbody = document.getElementById('obs-body');
+        tbody.innerHTML = CIRCUITS_DATA.map(c => `
+            <tr id="row-${c.id}">
+                <td><b>Arrangement ${c.id}</b></td>
+                <td class="col-pred">—</td>
+                <td class="col-obs">—</td>
+                <td class="col-eval">—</td>
+                <td class="col-reason" style="color: var(--text-muted); font-size:0.9rem;">—</td>
+            </tr>
+        `).join('');
+    }
+
+    function updateInputs(id) {
+        state[id].prediction = document.getElementById(`pred-${id}`).value;
+        state[id].confidence = document.getElementById(`conf-${id}`).value;
+    }
+
+    function testSingle(id) {
+        const c = CIRCUITS_DATA.find(x => x.id === id);
+        const currentInstance = state[id];
+        
+        currentInstance.tested = true;
+
+        // Render energized elements
+        const card = document.getElementById(`card-${id}`);
+        card.querySelector('.circuit-viewport').innerHTML = generateSvg(c, true);
+        
+        const tag = card.querySelector('.status-tag');
+        tag.textContent = c.glows ? 'Closed Circuit' : 'Open Circuit';
+        tag.className = `tag status-tag ${c.glows ? 'closed' : 'open-circuit'}`;
+
+        // Feedback element insertion updates
+        const feedback = document.getElementById(`feedback-${id}`);
+        const realObservationText = c.glows ? 'Bulb glows bright!' : 'Bulb remains dark.';
+        feedback.innerHTML = `<strong>Result:</strong> ${realObservationText}<br><span style="font-size:0.85rem; color: var(--text-muted);">${c.reason}</span>`;
+        feedback.classList.add('active');
+
+        // Dynamic metrics logging updates down to the table
+        const row = document.getElementById(`row-${id}`);
+        const displayPredText = currentInstance.prediction === '' ? 'No prior forecast' : (currentInstance.prediction === 'glow' ? 'Will Glow' : 'Will Not Glow');
+        
+        row.querySelector('.col-pred').textContent = displayPredText;
+        row.querySelector('.col-obs').textContent = c.glows ? 'Glows' : 'No Glow';
+        row.querySelector('.col-reason').textContent = c.reason;
+
+        const evalCol = row.querySelector('.col-eval');
+        if(currentInstance.prediction) {
+            const parsedCorrectState = (currentInstance.prediction === 'glow') === c.glows;
+            evalCol.innerHTML = parsedCorrectState ? `<span class="status-badge correct">Correct</span>` : `<span class="status-badge wrong">Review</span>`;
+        } else {
+            evalCol.innerHTML = `<span>—</span>`;
+        }
+
+        checkEvaluationTrigger();
+    }
+
+    function testAll() {
+        CIRCUITS_DATA.forEach(c => testSingle(c.id));
+    }
+
+    function checkEvaluationTrigger() {
+        const allCompleted = Object.values(state).every(item => item.tested);
+        if (!allCompleted) return;
+
+        let matchingScore = 0;
+        let evaluationCount = 0;
+        let cumulativeConfidence = 0;
+        let dynamicConfidenceCount = 0;
+
+        CIRCUITS_DATA.forEach(c => {
+            const currentObj = state[c.id];
+            if(currentObj.prediction) {
+                evaluationCount++;
+                if((currentObj.prediction === 'glow') === c.glows) matchingScore++;
+            }
+            const confVal = parseInt(currentObj.confidence, 10);
+            if(!isNaN(confVal) && confVal >= 1 && confVal <= 10) {
+                cumulativeConfidence += confVal;
+                dynamicConfidenceCount++;
+            }
+        });
+
+        const localizedConfidenceAverage = dynamicConfidenceCount > 0 ? (cumulativeConfidence / dynamicConfidenceCount).toFixed(1) : 'N/A';
+        const evaluationBlock = document.getElementById('evaluation-panel');
+        
+        evaluationBlock.style.display = 'block';
+        evaluationBlock.innerHTML = `
+            <h2>3. Laboratory Performance Evaluation Analytics</h2>
+            <p class="sub">Your cognitive tracking profile parameters metricized dynamically inside laboratory engine.</p>
+            <div class="eval-grid">
+                <div class="stat-box">
+                    <div class="stat-val">${matchingScore} / ${evaluationCount || CIRCUITS_DATA.length}</div>
+                    <div class="form-group" style="margin-top:0.5rem;"><label>Hypothesis Accuracy Matrix Score</label></div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-val">${localizedConfidenceAverage} <span style="font-size:1rem; color:var(--text-muted);">/ 10</span></div>
+                    <div class="form-group" style="margin-top:0.5rem;"><label>Mean Prediction Self-Assessment Confidence Score</label></div>
+                </div>
+            </div>
+            <p style="margin-top: 1.5rem; font-weight:500; text-align:center; color: ${matchingScore === 6 ? 'var(--success)' : 'var(--text-main)'}">
+                ${matchingScore === 6 ? '🎯 Phenomenal precision insight. Absolute complete awareness regarding circuit closure mechanics.' : '🔁 Identify anomalies where observation behaviors conflicted with your initial hypotheses predictions.'}
+            </p>
+        `;
+    }
+
+    function resetAll() {
+        document.getElementById('evaluation-panel').style.display = 'none';
+        init();
+    }
+
+    return { init, updateInputs, testSingle, testAll, resetAll };
+})();
+
+// Self executing framework initialization engine call logic trigger loops
+window.addEventListener('DOMContentLoaded', () => Lab.init());
+</script>
+</body>
+</html>

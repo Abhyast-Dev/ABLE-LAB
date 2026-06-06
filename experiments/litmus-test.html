@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Litmus Test Laboratory | Abhyast Science</title>
+    <style>
+        :root {
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --acid-color: #ef4444;
+            --acid-bg: #fee2e2;
+            --base-color: #3b82f6;
+            --base-bg: #dbeafe;
+            --neutral-color: #10b981;
+            --neutral-bg: #d1fae5;
+            --border: #e2e8f0;
+            --radius: 12px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg-main); color: var(--text-main); line-height: 1.5; padding-bottom: 3rem; }
+        
+        .wrap { max-width: 1240px; margin: 0 auto; padding: 0 1.5rem; }
+        
+        /* Navigation Topbar */
+        .topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, .82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(235, 227, 210, .85);
+}
+.nav {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* Consolidated Brand Identity Node */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+}
+.logo-mark {
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--ab-yellow), var(--ab-aqua) 50%, var(--ab-pink));
+  display: grid;
+  place-items: center;
+  color: var(--ab-navy);
+  font-weight: 900;
+  letter-spacing: .02em;
+  box-shadow: 0 10px 20px rgba(75, 194, 196, .18);
+}
+.header-logo {
+  height: 36px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+.brand-text strong {
+  color: var(--ab-navy);
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+.brand-text span {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.navlinks { display: flex; gap: 18px; align-items: center; color: var(--muted); font-size: .95rem; }
+.navlinks a { text-decoration: none; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; }
+.navlinks a:hover { color: var(--ab-navy); border-bottom-color: var(--ab-yellow); }
+        /* Hero Header */
+        .lab-hero { padding: 3rem 0; background: linear-gradient(135deg, #f0fdf4 0%, #e1f5fe 100%); border-bottom: 1px solid var(--border); margin-bottom: 2.5rem; }
+        .eyebrow { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--primary); }
+        h1 { font-size: 2.5rem; font-weight: 800; margin: 0.5rem 0 1rem; letter-spacing: -0.02em; }
+        .lead { max-width: 700px; color: var(--text-muted); font-size: 1.1rem; margin-bottom: 1.5rem; }
+        .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+        /* General Button System */
+        .btn { background: var(--primary); color: white; border: none; padding: 0.625rem 1.25rem; font-size: 0.95rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; }
+        .btn:hover { background: var(--primary-hover); transform: translateY(-1px); }
+        .btn.secondary { background: transparent; color: var(--text-main); border: 1px solid var(--border); }
+        .btn.secondary:hover { background: #f1f5f9; }
+        .btn.soft { background: #e0f2fe; color: #0369a1; }
+        .btn.soft:hover { background: #bae6fd; }
+
+        /* Structure Panels */
+        .panel { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; margin-bottom: 2rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); }
+        .panel h2 { font-size: 1.5rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .panel .sub { color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem; }
+
+        /* Unified Sample Grid Layout */
+        .lab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        
+        /* Unified Beaker/Sample Interactive Card Component */
+        .sample-card { border: 1px solid var(--border); border-radius: var(--radius); background: #fff; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s; position: relative; overflow: hidden; }
+        .sample-card:hover { transform: translateY(-2px); box-shadow: 0 12px 20px -5px rgba(0,0,0,0.08); }
+        
+        .card-header { padding: 1rem 1.25rem; background: #fafafa; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .card-header h3 { font-size: 1.05rem; font-weight: 700; color: var(--text-main); }
+        .ph-badge { font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.5rem; border-radius: 20px; background: #f1f5f9; color: var(--text-muted); }
+
+        /* Beaker Animation Graphic Space */
+        .beaker-area { height: 130px; background: #fafafa; display: flex; justify-content: center; align-items: flex-end; padding-bottom: 1rem; border-bottom: 1px solid var(--border); position: relative; }
+        .beaker-graphic { width: 80px; height: 100px; border: 3px solid #64748b; border-top: none; border-radius: 0 0 12px 12px; position: relative; display: flex; align-items: flex-end; overflow: hidden; background: #f8fafc; }
+        .beaker-liquid { width: 100%; height: 50%; background: rgba(59, 130, 246, 0.15); transition: background-color 0.4s; }
+        
+        /* Mini indicators dipped inside fluid vectors */
+        .litmus-holder { position: absolute; top: 10px; left: 0; right: 0; display: flex; justify-content: center; gap: 0.35rem; }
+        .mini-indicator { width: 10px; height: 45px; border-radius: 2px; border: 1px solid rgba(0,0,0,0.1); display: inline-block; transition: background 0.3s; }
+        .mini-indicator.blue { background: #3b82f6; }
+        .mini-indicator.red { background: #ef4444; }
+
+        /* Interactive form row parameters inside sample workspace cards */
+        .card-workspace { padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem; flex-grow: 1; }
+        .form-row { display: grid; grid-template-columns: 3fr 2fr; gap: 0.5rem; }
+        .form-group label { display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.25rem; }
+        select, input[type="number"] { width: 100%; padding: 0.5rem; border: 1px solid var(--border); border-radius: 6px; font-size: 0.9rem; color: var(--text-main); background: #fff; }
+        
+        .test-trigger-row { display: flex; gap: 0.5rem; margin-top: auto; border-top: 1px solid var(--border); padding-top: 0.75rem; }
+        .test-trigger-row .btn { flex: 1; font-size: 0.8rem; padding: 0.5rem; }
+
+        /* Scientific Analytical Output Logging Panel Layouts */
+        .log-terminal { background: #0f172a; color: #38bdf8; font-family: monospace; padding: 1.25rem; border-radius: 8px; height: 180px; overflow-y: auto; font-size: 0.9rem; line-height: 1.6; }
+        .log-entry { margin-bottom: 0.25rem; border-left: 2px solid #0284c7; padding-left: 0.5rem; }
+        .log-entry.success { border-color: #10b981; color: #34d399; }
+        .log-entry.warn { border-color: #f59e0b; color: #fbbf24; }
+
+        /* Dynamic Evaluation Metrics Analytics Grid Layout */
+        .eval-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 1rem; }
+        .stat-card { background: #f8fafc; border: 1px solid var(--border); padding: 1.5rem; border-radius: 8px; text-align: center; }
+        .stat-num { font-size: 2.25rem; font-weight: 800; color: var(--primary); }
+        .stat-label { font-size: 0.75rem; text-transform: uppercase; tracking: 0.05em; color: var(--text-muted); font-weight: 700; margin-top: 0.25rem; }
+
+        /* Laboratory Matrix Log Table Representation styling rules */
+        .table-container { overflow-x: auto; margin-top: 1rem; }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.95rem; }
+        th, td { padding: 1rem; border-bottom: 1px solid var(--border); }
+        th { background: #f8fafc; font-weight: 600; color: var(--text-muted); }
+        
+        .tag-status { font-weight: 600; font-size: 0.8rem; padding: 0.2rem 0.5rem; border-radius: 4px; text-transform: capitalize; }
+        .tag-status.acid { background: var(--acid-bg); color: var(--acid-color); }
+        .tag-status.base { background: var(--base-bg); color: var(--base-color); }
+        .tag-status.neutral { background: var(--neutral-bg); color: var(--neutral-color); }
+
+        .eval-badge { font-weight: 700; font-size: 0.8rem; padding: 0.15rem 0.4rem; border-radius: 4px; }
+        .eval-badge.correct { background: #dcfce7; color: #16a34a; }
+        .eval-badge.wrong { background: #fee2e2; color: #dc2626; }
+
+        /* Responsive Glossary Layout components */
+        .glossary { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; }
+        .term { background: #f8fafc; padding: 1.25rem; border-radius: 8px; border: 1px solid var(--border); }
+        .term b { display: block; font-size: 1.05rem; margin-bottom: 0.35rem; color: var(--primary); }
+    </style>
+</head>
+<body>
+
+    <header class="topbar">
+        <div class="wrap nav">
+            
+            <a class="brand" href="#">
+                <a class="brand" href="../index.html">
+                <img src="../assets/Logo.png" alt="ABLE™ Science Logo" class="header-logo" onerror="this.style.display='none';">
+                <strong>ABLE™ Science</strong>
+               
+                <span>Litmus Test Laboratory</span>
+            </a>
+            <nav class="navlinks">
+                <a href="#matrix-panel">Observation Log Matrix</a>
+                <a href="#glossary-panel">Glossary Reference</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="wrap" style="margin-top: 2rem;">
+        <section class="lab-hero" style="border-radius: var(--radius); padding: 2.5rem;">
+            <span class="eyebrow">Virtual Lab Activity • Acid & Base Analysis</span>
+            <h1>Interactive Chemical Litmus Laboratory</h1>
+            <p class="lead">Formulate operational hypotheses, track fluid indicator behaviors, evaluate chemical configurations, and document systemic molecular evaluations for 12 everyday reagent solutions.</p>
+            <div class="actions">
+                
+                <a class="btn secondary" href="../index.html">← Back Home Workspace</a>
+                <button class="btn" onclick="LitmusLab.testAll()">Run All System Diagnostics</button>
+                <button class="btn secondary" onclick="LitmusLab.resetWorkspace()">Reset Empirical Matrix</button>
+                <a class="btn soft" href="#glossary-panel">Open Glossary</a>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2>1. Setup Workbench: Forecast & Test Solutions</h2>
+            <p class="sub">Set alternative hypothesis tracking variables for each substance, then drop standard dynamic chemical indicators to isolate structural pH classifications.</p>
+            <div id="reagent-grid" class="lab-grid"></div>
+        </section>
+
+        <section id="evaluation-panel" class="panel" style="display: none;"></section>
+
+        <section class="panel">
+            <h2>2. Empirical Diagnostic Terminal</h2>
+            <p class="sub">Real-time analytical activity records emitted from chemistry component interactions.</p>
+            <div class="log-terminal" id="terminal-feed">
+                <div class="log-entry">⚡ System online. Awaiting chemical matrix diagnostics logic input loops...</div>
+            </div>
+        </section>
+
+        <section class="panel" id="matrix-panel">
+            <h2>3. Chemistry Laboratory Observation Matrix Log</h2>
+            <p class="sub">Static data logs verified down to systemic records after dynamic analysis runs finish execution protocols.</p>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Target Chemical Compound Name</th>
+                            <th>Blue Strip Result Log</th>
+                            <th>Red Strip Result Log</th>
+                            <th>Hypothesis Evaluation</th>
+                            <th>Final Structural Inference</th>
+                        </tr>
+                    </thead>
+                    <tbody id="matrix-body"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="panel" id="glossary-panel">
+            <h2>Glossary</h2>
+            <div class="glossary">
+                <div class="term"><b>pH Scale Metric</b>A logarithmic structural representation tracking hydronium ion density. Measures if a molecule behaves as an acid (<7), neutral (=7), or base (>7).</div>
+                <div class="term"><b>H⁺ Hydronium Ions</b>Hydrogen nuclei ions produced via molecular polarization whenever safe proton donor acids dissolve in clean water solvents.</div>
+                <div class="term"><b>OH⁻ Hydroxide Ions</b>Negative dynamic molecular ions released by alkaline bases, altering chemical indicators during neutralizations.</div>
+                <div class="term"><b>Litmus Indicator Strip</b>A natural biochemical compound paper used to differentiate solution natures. Blue paper goes red in acids; red goes blue in bases.</div>
+            </div>
+        </section>
+    </main>
+
+<script>
+/**
+ * Global application parameters tracking active solutions
+ */
+const REAGENTS_DATA = [
+    { id: 'lemon', name: 'Lemon Juice', type: 'acid', ph: '2' },
+    { id: 'soap', name: 'Soap Solution', type: 'base', ph: '10' },
+    { id: 'amla', name: 'Amla Juice', type: 'acid', ph: '3' },
+    { id: 'tamarind', name: 'Tamarind Water', type: 'acid', ph: '2-3' },
+    { id: 'vinegar', name: 'Vinegar Compound', type: 'acid', ph: '2-3' },
+    { id: 'baking-soda', name: 'Baking Soda Fluid', type: 'base', ph: '8-9' },
+    { id: 'lime-water', name: 'Lime Water (CaOH)', type: 'base', ph: '12' },
+    { id: 'tap-water', name: 'Standard Tap Water', type: 'neutral', ph: '7' },
+    { id: 'washing-powder', name: 'Washing Powder Sol', type: 'base', ph: '10-11' },
+    { id: 'sugar', name: 'Pure Sugar Solution', type: 'neutral', ph: '7' },
+    { id: 'salt', name: 'Saline NaCl Water', type: 'neutral', ph: '7' },
+    { id: 'custom-reagent', name: 'Unknown Mystery Sample', type: 'unknown', ph: '?' }
+];
+
+/**
+ * Isolated Application Scope Namespace Module Pattern
+ */
+const LitmusLab = (() => {
+    let trackingState = {};
+    let totalDipsLoggedCount = 0;
+    const targetsNeededToFinish = REAGENTS_DATA.length * 2;
+
+    function init() {
+        trackingState = {};
+        totalDipsLoggedCount = 0;
+        
+        REAGENTS_DATA.forEach(r => {
+            trackingState[r.id] = { blueTested: false, redTested: false, hypothesis: '', confidence: '' };
+        });
+
+        renderComponentCards();
+        renderLogMatrixTable();
+    }
+
+    function renderComponentCards() {
+        const wrapper = document.getElementById('reagent-grid');
+        wrapper.innerHTML = REAGENTS_DATA.map((r, index) => `
+            <article class="sample-card" id="card-${r.id}">
+                <div class="card-header">
+                    <h3>${index + 1}. ${r.name}</h3>
+                    <span class="ph-badge">Approx pH: ${r.ph}</span>
+                </div>
+                <div class="beaker-area">
+                    <div class="litmus-holder" id="dipped-strips-${r.id}"></div>
+                    <div class="beaker-graphic">
+                        <div class="beaker-liquid" id="liquid-${r.id}"></div>
+                    </div>
+                </div>
+                <div class="card-workspace">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Hypothesis Forecast</label>
+                            <select id="hypo-${r.id}" onchange="LitmusLab.cacheFormInputs('${r.id}')">
+                                <option value="">Select structure...</option>
+                                <option value="acid">Acidic</option>
+                                <option value="base">Basic</option>
+                                <option value="neutral">Neutral</option>
+                                <option value="unknown">Unknown</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Confidence</label>
+                            <input type="number" id="conf-${r.id}" min="1" max="10" placeholder="1-10" oninput="LitmusLab.cacheFormInputs('${r.id}')">
+                        </div>
+                    </div>
+                    <div class="test-trigger-row">
+                        <button class="btn secondary" onclick="LitmusLab.executeSingleTest('${r.id}', 'blue')" style="border-color:#3b82f6; color:#2563eb;">⚡ Blue Litmus</button>
+                        <button class="btn secondary" onclick="LitmusLab.executeSingleTest('${r.id}', 'red')" style="border-color:#ef4444; color:#dc2626;">⚡ Red Litmus</button>
+                    </div>
+                </div>
+            </article>
+        `).join('');
+    }
+
+    function renderLogMatrixTable() {
+        const body = document.getElementById('matrix-body');
+        body.innerHTML = REAGENTS_DATA.map((r, index) => `
+            <tr id="row-${r.id}">
+                <td>${index + 1}</td>
+                <td><strong>${r.name}</strong></td>
+                <td class="cell-blue-res">—</td>
+                <td class="cell-red-res">—</td>
+                <td class="cell-hypo-eval">—</td>
+                <td class="cell-final-inf"><span style="color: var(--text-muted);">Awaiting strips...</span></td>
+            </tr>
+        `).join('');
+    }
+
+    function cacheFormInputs(id) {
+        trackingState[id].hypothesis = document.getElementById(`hypo-${id}`).value;
+        trackingState[id].confidence = document.getElementById(`conf-${id}`).value;
+    }
+
+    function executeSingleTest(id, indicatorColor) {
+        const itemState = trackingState[id];
+        const reagentObj = REAGENTS_DATA.find(x => x.id === id);
+
+        // Avoid recording duplicate test events
+        if (indicatorColor === 'blue' && itemState.blueTested) {
+            pushTerminalMessage(`↻ Component loop ignored: ${reagentObj.name} already processed via Blue Litmus.`, 'warn');
+            return;
+        }
+        if (indicatorColor === 'red' && itemState.redTested) {
+            pushTerminalMessage(`↻ Component loop ignored: ${reagentObj.name} already processed via Red Litmus.`, 'warn');
+            return;
+        }
+
+        // Set state logs true
+        if (indicatorColor === 'blue') itemState.blueTested = true;
+        if (indicatorColor === 'red') itemState.redTested = true;
+        totalDipsLoggedCount++;
+
+        // Calculate dynamic colors
+        let finalRenderedColor = indicatorColor;
+        let actionResultText = '';
+
+        if (reagentObj.type === 'acid') {
+            finalRenderedColor = 'red';
+            actionResultText = (indicatorColor === 'blue') ? 'Turns Red (Acidic Reaction)' : 'Stays Red (Acidic Retention)';
+        } else if (reagentObj.type === 'base') {
+            finalRenderedColor = 'blue';
+            actionResultText = (indicatorColor === 'red') ? 'Turns Blue (Alkaline Reaction)' : 'Stays Blue (Alkaline Retention)';
+        } else if (reagentObj.type === 'neutral') {
+            actionResultText = `Retains native ${indicatorColor.toUpperCase()} parameters (Neutral status)`;
+        } else {
+            actionResultText = 'Unpredictable variations observed';
+        }
+
+        // Apply interactive physical color shift indicators to beaker space
+        const targetHolder = document.getElementById(`dipped-strips-${id}`);
+        targetHolder.insertAdjacentHTML('beforeend', `<span class="mini-indicator ${finalRenderedColor}"></span>`);
+        
+        // Dynamically tint beaker water to highlight active status mapping
+        const liquidNode = document.getElementById(`liquid-${id}`);
+        if (reagentObj.type === 'acid') liquidNode.style.backgroundColor = 'rgba(239, 68, 68, 0.2)';
+        if (reagentObj.type === 'base') liquidNode.style.backgroundColor = 'rgba(59, 130, 246, 0.2)';
+        if (reagentObj.type === 'neutral') liquidNode.style.backgroundColor = 'rgba(16, 185, 129, 0.15)';
+
+        // Emit trace tracking parameters onto logging feed terminal
+        pushTerminalMessage(`🔬 Reagent target [${reagentObj.name}] mixed with ${indicatorColor.toUpperCase()} paper: ${actionResultText}`, 'success');
+
+        // Apply updates directly down into table layout cells
+        const targetTableRow = document.getElementById(`row-${id}`);
+        const targetResCell = indicatorColor === 'blue' ? targetTableRow.querySelector('.cell-blue-res') : targetTableRow.querySelector('.cell-red-res');
+        
+        targetResCell.textContent = finalRenderedColor.toUpperCase();
+        targetResCell.style.fontWeight = '700';
+        targetResCell.style.color = finalRenderedColor === 'blue' ? 'var(--primary)' : 'var(--acid-color)';
+
+        // Handle case where both indicator options are processed completely
+        if (itemState.blueTested && itemState.redTested) {
+            const infNode = targetTableRow.querySelector('.cell-final-inf');
+            infNode.innerHTML = `<span class="tag-status ${reagentObj.type}">${reagentObj.type}</span>`;
+
+            const evaluationCell = targetTableRow.querySelector('.cell-hypo-eval');
+            if (itemState.hypothesis) {
+                const wasAccurate = itemState.hypothesis === reagentObj.type;
+                evaluationCell.innerHTML = wasAccurate ? `<span class="eval-badge correct">Correct</span>` : `<span class="eval-badge wrong">Mismatch</span>`;
+            } else {
+                evaluationCell.innerHTML = `<span>No forecast</span>`;
+            }
+        }
+
+        if (totalDipsLoggedCount === targetsNeededToFinish) {
+            calculateOverallLabEvaluation();
+        }
+    }
+
+    function pushTerminalMessage(msg, type = '') {
+        const feed = document.getElementById('terminal-feed');
+        if (totalDipsLoggedCount === 1 && feed.innerHTML.includes('System online')) {
+            feed.innerHTML = '';
+        }
+        feed.insertAdjacentHTML('beforeend', `<div class="log-entry ${type}">${msg}</div>`);
+        feed.scrollTop = feed.scrollHeight;
+    }
+
+    function testAll() {
+        REAGENTS_DATA.forEach(r => {
+            executeSingleTest(r.id, 'blue');
+            executeSingleTest(r.id, 'red');
+        });
+        pushTerminalMessage("🏁 Matrix automated check script finished executing tasks safely.", "success");
+    }
+
+    function calculateOverallLabEvaluation() {
+        const knownSamples = REAGENTS_DATA.filter(x => x.type !== 'unknown');
+        let matchedHypothesisCount = 0;
+        let quantifiedConfidenceSum = 0;
+        let validatedInputsCount = 0;
+
+        knownSamples.forEach(r => {
+            const stateObj = trackingState[r.id];
+            if (stateObj.hypothesis === r.type) {
+                matchedHypothesisCount++;
+            }
+            const confidenceValue = parseInt(stateObj.confidence, 10);
+            if (!isNaN(confidenceValue) && confidenceValue >= 1 && confidenceValue <= 10) {
+                quantifiedConfidenceSum += confidenceValue;
+                validatedInputsCount++;
+            }
+        });
+
+        const exactConfidenceMeanScore = validatedInputsCount > 0 ? (quantifiedConfidenceSum / validatedInputsCount).toFixed(1) : '0.0';
+        const targetOutputSection = document.getElementById('evaluation-panel');
+        
+        targetOutputSection.style.display = 'block';
+        targetOutputSection.innerHTML = `
+            <h2>4. Lab Analytical Metric Diagnostics Dashboard</h2>
+            <p class="sub">Structural precision metrics derived from student forecasting variations.</p>
+            <div class="eval-grid">
+                <div class="stat-card">
+                    <div class="stat-num">${matchedHypothesisCount} / ${knownSamples.length}</div>
+                    <div class="stat-label">Hypothesis Matrix Accuracy</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num">${exactConfidenceMeanScore} <span style="font-size:1.2rem; color:var(--text-muted);">/ 10</span></div>
+                    <div class="stat-label">Mean Confidence Self-Evaluation Score</div>
+                </div>
+            </div>
+            <p style="margin-top:1.5rem; text-align:center; font-weight:600; color: ${matchedHypothesisCount === knownSamples.length ? 'var(--neutral-color)' : 'var(--text-main)'}">
+                ${matchedHypothesisCount === knownSamples.length ? '🎯 Exceptional physical forecasting parameters achieved. Absolute structural indicator classification clarity.' : '🔄 Re-evaluate mismatch values and contrast chemical observations against initial predictions.'}
+            </p>
+        `;
+        targetOutputSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function resetWorkspace() {
+        document.getElementById('evaluation-panel').style.display = 'none';
+        document.getElementById('terminal-feed').innerHTML = `<div class="log-entry">⚡ Lab data matrices tracking maps initialized cleanly back to structural base parameters...</div>`;
+        init();
+    }
+
+    return { init, cacheFormInputs, executeSingleTest, testAll, resetWorkspace };
+})();
+
+// Initialize tracking states immediately upon rendering core document assets
+window.addEventListener('DOMContentLoaded', () => LitmusLab.init());
+</script>
+</body>
+</html>

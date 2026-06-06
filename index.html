@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABLE™ Science Experiments | Abhyast Science</title>
+    <style>
+        :root {
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --primary-soft: #eff6ff;
+            --accent-pink: #db2777;
+            --accent-pink-soft: #fdf2f8;
+            --accent-green: #16a34a;
+            --accent-green-soft: #f0fdf4;
+            --border: #e2e8f0;
+            --radius: 16px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg-main); color: var(--text-main); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+        
+        .wrap { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+        
+        /* Navigation Topbar */
+        .topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, .82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(235, 227, 210, .85);
+}
+.nav {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* Consolidated Brand Identity Node */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+}
+.logo-mark {
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--ab-yellow), var(--ab-aqua) 50%, var(--ab-pink));
+  display: grid;
+  place-items: center;
+  color: var(--ab-navy);
+  font-weight: 900;
+  letter-spacing: .02em;
+  box-shadow: 0 10px 20px rgba(75, 194, 196, .18);
+}
+.header-logo {
+  height: 36px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+.brand-text strong {
+  color: var(--ab-navy);
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+.brand-text span {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.navlinks { display: flex; gap: 18px; align-items: center; color: var(--muted); font-size: .95rem; }
+.navlinks a { text-decoration: none; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; }
+.navlinks a:hover { color: var(--ab-navy); border-bottom-color: var(--ab-yellow); }
+        /* Asymmetric Hero Grid Section */
+        .hero { padding: 5rem 0; background: linear-gradient(135deg, #f0fdf4 0%, #eff6ff 100%); border-bottom: 1px solid var(--border); }
+        .hero-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 4rem; align-items: center; }
+        @media (max-width: 768px) { .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
+        
+        .eyebrow { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--primary); display: inline-block; margin-bottom: 0.75rem; }
+        h1 { font-size: 3rem; font-weight: 800; line-height: 1.15; margin-bottom: 1.25rem; letter-spacing: -0.03em; color: #0f172a; }
+        .lead { max-width: 600px; color: var(--text-muted); font-size: 1.15rem; margin-bottom: 2rem; }
+        .actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+        /* Unified Button System */
+        .btn { background: var(--primary); color: white; border: none; padding: 0.75rem 1.5rem; font-size: 0.95rem; font-weight: 600; border-radius: 10px; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
+        .btn:hover { background: var(--primary-hover); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2); }
+        .btn.secondary { background: var(--bg-card); color: var(--text-main); border: 1px solid var(--border); }
+        .btn.secondary:hover { background: #f8fafc; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .btn.disabled { background: #e2e8f0; color: #94a3b8; cursor: not-allowed; pointer-events: none; border: none; }
+
+        /* Mission Dashboard Card */
+        .mission-card { background: var(--bg-card); border: 1px solid var(--border); padding: 2.5rem; border-radius: var(--radius); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); }
+        .mission-card h2 { font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem; color: #0f172a; }
+        .mission-card .sub { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2rem; }
+        
+        .stats-matrix { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .stat-box { background: var(--bg-main); border: 1px solid var(--border); padding: 1.25rem 0.75rem; border-radius: 12px; text-align: center; transition: background 0.2s; }
+        .stat-box:hover { background: #fff; border-color: var(--primary); }
+        .stat-box strong { display: block; font-size: 1.75rem; font-weight: 800; color: var(--primary); margin-bottom: 0.25rem; }
+        .stat-box span { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); tracking: 0.02em; }
+
+        /* Core Section Layouts */
+        .section { padding: 5rem 0; }
+        .section.alt { background: #f1f5f9; }
+        .section-head { margin-bottom: 3rem; }
+        .section-head h2 { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+        .section-head .sub { color: var(--text-muted); font-size: 1.05rem; }
+
+        /* Interactive Experiment Cards Grid */
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+        .exp-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 2.25rem; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s; text-decoration: none; position: relative; }
+        .exp-card:not(.disabled):hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08); }
+        .exp-card.disabled { opacity: 0.75; background: #fafafa; }
+        
+        .tag-row { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; }
+        .tag { font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 20px; display: inline-flex; align-items: center; }
+        .tag.live { background: var(--accent-green-soft); color: var(--accent-green); }
+        .tag.soon { background: #f1f5f9; color: #475569; }
+        .tag.pink { background: var(--accent-pink-soft); color: var(--accent-pink); }
+        
+        .exp-card h3 { font-size: 1.35rem; font-weight: 800; margin-bottom: 0.75rem; color: #0f172a; }
+        .exp-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.25rem; flex-grow: 1; }
+        .exp-meta { font-size: 0.85rem; border-top: 1px solid var(--border); padding-top: 1rem; margin-bottom: 1.5rem; color: var(--text-main); }
+
+        /* Shared Grid Glossary Layout */
+        .glossary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .term-card { background: var(--bg-card); border: 1px solid var(--border); padding: 1.5rem; border-radius: 12px; transition: transform 0.2s; }
+        .term-card:hover { transform: translateY(-2px); }
+        .term-card b { display: block; font-size: 1.1rem; color: var(--primary); margin-bottom: 0.5rem; font-weight: 700; }
+        .term-card p { font-size: 0.9rem; color: var(--text-muted); }
+
+        /* Call-To-Action Reflector Banner */
+        .journey-banner { padding: 4.5rem 0; background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); color: white; text-align: center; border-radius: var(--radius); margin: 2rem auto; max-width: calc(1200px - 3rem); }
+        .journey-banner h2 { font-size: 2.25rem; font-weight: 800; margin-bottom: 0.75rem; letter-spacing: -0.02em; }
+        .journey-banner p { color: #94a3b8; font-size: 1.1rem; max-width: 650px; margin: 0 auto; }
+
+        /* Footer System */
+        .footer { background: var(--bg-card); border-top: 1px solid var(--border); padding: 2.5rem 0; text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 4rem; }
+        .footer-wrap { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        @media (max-width: 640px) { .footer-wrap { flex-direction: column; } }
+    </style>
+</head>
+<body>
+
+    <header class="topbar">
+        <div class="wrap nav">
+            <a class="brand" href="index.html" aria-label="ABLE™ Science Home">
+                <img src="assets/Logo.png" alt="ABLE™ Science Logo" class="header-logo" onerror="this.style.display='none';">
+                <strong>ABLE™ Science</strong>
+                <span>Interactive Experiments</span>
+            </a>
+            <nav class="navlinks">
+                <a href="#experiments">Experiments Workspace</a>
+                <a href="#glossary">Glossary Reference</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Asymmetric Hero Section -->
+        <section class="hero">
+            <div class="wrap hero-grid">
+                <div>
+                    <span class="eyebrow">Classes VI–VII • Interactive Science Framework</span>
+                    <h1>Simple virtual experiments for classroom curiosity.</h1>
+                    <p class="lead">Every experiment is a custom gateway to deep logical discovery. Formulate hypotheses using standard litmus papers or configure full dynamic circuit nodes instantly.</p>
+                    <div class="actions">
+                         
+                        
+                        <a class="btn" href="#experiments">Experiment and Learn</a>
+                        
+                    </div>
+                </div>
+                <aside class="mission-card">
+                    <h2>Your First Missions</h2>
+                    <p class="sub">Where structural curiosity maps clean scientific breakthroughs parameters directly.</p>
+                    <div class="stats-matrix">
+                        <div class="stat-box"><strong>3</strong><span>Live Labs</span></div>
+                        <div class="stat-box"><strong>12</strong><span>Samples</span></div>
+                        <div class="stat-box"><strong>6</strong><span>Circuits</span></div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- Dynamic Lab Selection Grid Section -->
+        <section class="section" id="experiments">
+            <div class="wrap">
+                <div class="section-head">
+                    <h2>Experiment Lab</h2>
+                    <p class="sub">Our modular labs work independently, giving you a smooth, dedicated workspace for every single science experiment.</p>
+                </div>
+                <div id="experiment-cards" class="cards-grid"></div>
+            </div>
+        </section>
+
+        <!-- Static Knowledge Shared Glossary Component Section -->
+        <section class="section alt" id="glossary">
+            <div class="wrap">
+                <div class="section-head">
+                    <h2>Shared Laboratory Glossary Reference</h2>
+                    <p class="sub">Primary structural definitions optimized for academic evaluation stages.</p>
+                </div>
+                <div class="glossary-grid">
+                    <div class="term-card"><b>pH Scale Metric</b><p>A mathematical parameter logging if an aqueous sample is acidic, basic, or neutral.</p></div>
+                    <div class="term-card"><b>H⁺ Hydronium Ions</b><p>Hydrogen dynamic proton cores produced via donor assets whenever acids mix in clean water fluids.</p></div>
+                    <div class="term-card"><b>OH⁻ Hydroxide Ions</b><p>Alkaline molecular products detached inside solutions when strong base configurations dissolve.</p></div>
+                    <div class="term-card"><b>Electric Circuit</b><p>A closed operational path that supports uninterrupted loops of electric current.</p></div>
+                    <div class="term-card"><b>Cell Terminals</b><p>The positive (+) and negative (-) polarized terminal connection interfaces on any battery source.</p></div>
+                    <div class="term-card"><b>Electrical Conductor</b><p>A structural material that permits current tracking to progress across internal vectors cleanly.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reflecting Call-To-Action Panel -->
+        <section class="wrap">
+            <div class="journey-banner">
+                <h2>Your Science Journey Begins Here</h2>
+                <p>Curiosity is your passport, observation is your compass, and every analytical test iteration builds deep operational expertise.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="wrap footer-wrap">
+            <p>© 2026 Abhyast Private Limited. All rights reserved.</p>
+            <p><strong>ABLE™</strong> and <strong>TAKECARE™</strong> are proprietary cognitive educational evaluation environments.</p>
+        </div>
+    </footer>
+
+<script>
+/**
+ * Configuration schema detailing interactive chemistry/physics experiments
+ */
+const EXPERIMENTS_REGISTRY = [
+    {
+        title: 'Litmus Test Laboratory',
+        icon: '🧪',
+        cls: 'VI–VII',
+        topic: 'Acids, Bases and Salts',
+        status: 'Live',
+        desc: 'Test 12 everyday substances with red and blue litmus paper to see whether they are acidic, basic, or neutral.',
+        file: 'experiments/litmus-test.html'
+    },
+    {
+        title: 'Electric Circuit Laboratory',
+        icon: '💡',
+        cls: 'VI–VII',
+        topic: 'Electricity and Circuits',
+        status: 'Live',
+        desc: 'Check if the bulb lights up when the circuit is closed in different wire and cell arrangements.',
+        file: 'experiments/electric-circuit-lab.html'
+    },
+    {
+        title: 'Conductors and Insulators Laboratory',
+        icon: '⚡',
+        cls: 'VI–VII',
+        topic: 'Electricity and Materials',
+        status: 'Live',
+        desc: 'Use a virtual circuit tester to check everyday materials and classify them as conductors or insulators.',
+        file: 'experiments/conductors-insulators-lab.html'
+    }
+];
+
+/**
+ * Self-contained logic initialization module
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    const cardsContainer = document.getElementById('experiment-cards');
+    
+    cardsContainer.innerHTML = EXPERIMENTS_REGISTRY.map(exp => {
+        const isLive = exp.status === 'Live';
+        return `
+            <article class="exp-card ${isLive ? '' : 'disabled'}">
+                <div class="tag-row">
+                    <span class="tag ${isLive ? 'live' : 'soon'}">${exp.icon} ${exp.status}</span>
+                    <span class="tag pink">${exp.cls}</span>
+                </div>
+                <h3>${exp.title}</h3>
+                <p>${exp.desc}</p>
+                <div class="exp-meta">
+                    <strong>Target Field:</strong> ${exp.topic}
+                </div>
+                <a class="btn ${isLive ? '' : 'disabled'}" href="${exp.file}">
+                    ${isLive ? 'Open Lab Experiment' : 'Development In Progress'}
+                </a>
+            </article>
+        `;
+    }).join('');
+});
+</script>
+</body>
+</html>
